@@ -8,7 +8,7 @@
 template <typename V>
 class Hashtable {
  private:
-  <std::list<Entry<V>>>** table;
+  std::list<Entry<V> >** table;
   int size;
  public:
   Hashtable<V>(int s);
