@@ -1,8 +1,8 @@
 CPP = g++
 CFLAGS = -Wall -Wextra
 
-#Hashtable.o: Hashtable.o Hashtable.cpp
-#	$(CPP) $(CGLAGS) -c Hashtable.cpp
+Hashtable.o: Hashtable.h Hashtable.cpp
+	$(CPP) $(CFLAGS) -c Hashtable.cpp
 
 etest: entry_test.cpp Entry.o
 	$(CPP) $(CFLAGS) -o etest entry_test.cpp Entry.o

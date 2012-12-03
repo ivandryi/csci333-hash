@@ -10,6 +10,7 @@ class Hashtable {
  private:
   std::list<Entry<V> >** table;
   int size;
+  int hashFunction(std::string k);
  public:
   Hashtable<V>(int s);
   ~Hashtable<V>();
