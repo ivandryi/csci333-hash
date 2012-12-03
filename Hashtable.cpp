@@ -35,10 +35,23 @@ int Hashtable<V>::hashFunction(std::string k) {
 template <typename V>
 void Hashtable<V>::insert(std::string k, V v) {
   int x = hashFunction(k);
-  if (true) {
-
+  if (table[x] == 0) {
+    std::list<Entry<V> > nList;
+    nList.push_back(Entry<V>(k, v));
+    table[x] = &nList;
   } else {
-
+    typename std::list<Entry<V> >::iterator it;
+    it = (*table[x]).begin();
+    std::string key;
+    while (it != (*table[x]).end()) {
+      key = (*it).getKey();
+      if (key.compare(k) == 0) {
+	(*it).setValue(v);
+	return;
+      }
+      it++;
+    }
+    (*table[x]).push_back(Entry<V>(k, v));
   }
 }
 
@@ -46,17 +59,16 @@ template <typename V>
 V Hashtable<V>::find(std::string k) {
   int x = hashFunction(k);
   assert (table[x] != 0);
-  std::list<Entry<V> > eList = (*table[x]);
   typename std::list<Entry<V> >::iterator it;
-  it = eList.begin();
+  it = (*table[x]).begin();
   std::string key;
-  while (it != eList.end()) {
+  while (it != (*table[x]).end()) {
     key = (*it).getKey();
-    if (key.compare(k) != 0)
+    if (key.compare(k) == 0)
       return (*it).getValue();
     it++;
   }
-  return 0;
+  return V();
 }
 
 template class Hashtable<int>;
