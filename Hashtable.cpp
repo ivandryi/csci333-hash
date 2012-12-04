@@ -1,4 +1,5 @@
 #include "Hashtable.h"
+#include <iostream>
 #include <list>
 #include <string>
 #include <assert.h>
@@ -29,6 +30,7 @@ int Hashtable<V>::hashFunction(std::string k) {
     sum = sum + (int) k[i];
   }
   hash = sum % size;
+  std::cout << hash << std::endl;
   return hash;
 }
 
@@ -36,23 +38,26 @@ template <typename V>
 void Hashtable<V>::insert(std::string k, V v) {
   int x = hashFunction(k);
   if (table[x] == 0) {
-    std::list<Entry<V> > nList;
-    nList.push_back(Entry<V>(k, v));
-    table[x] = &nList;
+    std::list<Entry<V> >* nList = new std::list<Entry<V> >();
+    nList->push_back(Entry<V>(k, v));
+    table[x] = nList;
+    //delete nlist;
   } else {
     typename std::list<Entry<V> >::iterator it;
     it = (*table[x]).begin();
     std::string key;
     while (it != (*table[x]).end()) {
+      std::cout << (*it).getKey() << " " << (*it).getValue() << std::endl;
       key = (*it).getKey();
       if (key.compare(k) == 0) {
 	(*it).setValue(v);
+	std::cout << (*it).getKey() << " " << (*it).getValue() << std::endl;
 	return;
       }
       it++;
     }
     (*table[x]).push_back(Entry<V>(k, v));
-  }
+    }
 }
 
 template <typename V>
@@ -64,10 +69,13 @@ V Hashtable<V>::find(std::string k) {
   std::string key;
   while (it != (*table[x]).end()) {
     key = (*it).getKey();
-    if (key.compare(k) == 0)
+    if (key.compare(k) == 0) {
+      std::cout << (*it).getValue() << std::endl;
       return (*it).getValue();
+    }
     it++;
   }
+  std::cout << "The element does not exist" << std::endl;
   return V();
 }
 
