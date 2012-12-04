@@ -16,6 +16,7 @@ class Hashtable {
   ~Hashtable<V>();
   void insert(std::string k, V v);
   V find(std::string k);
+  void remove(std::string k);
 };
 
 #endif

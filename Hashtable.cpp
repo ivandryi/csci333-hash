@@ -79,6 +79,23 @@ V Hashtable<V>::find(std::string k) {
   return V();
 }
 
+template <typename V>
+void Hashtable<V>::remove(std::string k) {
+  int x = hashFunction(k);
+  assert (table[x] != 0);
+  typename std::list<Entry<V> >::iterator it;
+  it = (*table[x]).begin();
+  std::string key;
+  while (it != (*table[x]).end()) {
+    key = (*it).getKey();
+    if (key.compare(k) == 0) {
+      std::cout << (*it).getValue() << " has been removed" << std::endl;
+      it = (*table[x]).erase(it);
+    }
+    else it++;
+  }
+}
+
 template class Hashtable<int>;
 template class Hashtable<double>;
 template class Hashtable<std::string>;
